@@ -14,26 +14,40 @@
 <div id="result"></div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         const form = document.querySelector('form');
         const resultDiv = document.getElementById('result');
 
-        form.addEventListener('submit', async function(event) {
+        form.addEventListener('submit', async function (event) {
             event.preventDefault();
 
-            const data = new FormData(form);
-            const response = await fetch('/rest-controller', {
-                method: 'POST',
-                body: data,
-            });
+            // Собираем данные формы
+            const message = form.message.value;
 
-            if (!response.ok) {
-                console.error('Ошибка отправки запроса:', response.statusText);
-                return;
+            try {
+                // Отправляем POST-запрос на локальный сервер
+                const response = await fetch('http://localhost:8080/api/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ message }) // Отправляем сообщение в формате JSON
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
+                // Получаем ответ от сервера
+                const data = await response.json(); // Ожидаем, что сервер вернет JSON
+                const answer = data.answer || ''; // Предполагаем, что ответ будет в ключе "answer"
+
+                // Выводим ответ на странице
+                resultDiv.innerHTML = `<p>Ответ от модели: ${answer}</p>`;
+            } catch (error) {
+                console.error('Ошибка:', error);
+                resultDiv.innerHTML = '<p>Произошла ошибка при получении ответа.</p>';
             }
-
-            const text = await response.text();
-            resultDiv.innerHTML = `<p>Полученная строка: ${text}</p>`;
         });
     });
 </script>
