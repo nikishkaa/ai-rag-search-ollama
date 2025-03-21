@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>REST Контроллер</title>
+</head>
+<body>
+<form action="/rest-controller" method="POST">
+    <label for="message">Сообщение:</label><br>
+    <input type="text" id="message" name="message"><br><br>
+    <button type="submit">Отправить</button>
+</form>
+
+<div id="result"></div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.querySelector('form');
+        const resultDiv = document.getElementById('result');
+
+        form.addEventListener('submit', async function (event) {
+            event.preventDefault();
+
+            // Собираем данные формы
+            const message = form.message.value;
+
+            try {
+                // Отправляем POST-запрос на локальный сервер
+                const response = await fetch('http://localhost:8080/api/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ message }) // Отправляем сообщение в формате JSON
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
+                // Получаем ответ от сервера
+                const data = await response.json(); // Ожидаем, что сервер вернет JSON
+                const answer = data.answer || ''; // Предполагаем, что ответ будет в ключе "answer"
+
+                // Выводим ответ на странице
+                resultDiv.innerHTML = `<p>Ответ от модели: ${answer}</p>`;
+            } catch (error) {
+                console.error('Ошибка:', error);
+                resultDiv.innerHTML = '<p>Произошла ошибка при получении ответа.</p>';
+            }
+        });
+    });
+</script>
+</body>
+</html>
