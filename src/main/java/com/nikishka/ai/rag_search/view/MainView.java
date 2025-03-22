@@ -34,7 +34,7 @@ public class MainView extends Div {
     private String sendRequest(String query) {
         try {
             RestTemplate restTemplate = new RestTemplate();
-            return restTemplate.postForObject("http://localhost:8080/api/chat/" + query, null, String.class);
+            return restTemplate.postForObject("/api/chat/" + query, null, String.class);
         } catch (Exception e) {
             return "Ошибка: " + e.getMessage();
         }
