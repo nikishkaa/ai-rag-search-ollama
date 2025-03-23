@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Thymeleaf UI</title>
+</head>
+<body>
+<div style="width: 500px; margin: auto; text-align: center; padding-top: 50px;">
+  <h1>Интерфейс взаимодействия с REST-сервисом</h1>
+
+  <form action="#" th:action="@{/send}" method="post">
+    <label for="message">Введите сообщение:</label><br/>
+    <input type="text" id="message" name="message"/><br/><br/>
+    <button type="submit">Отправить</button>
+  </form>
+
+  <div th:if="${response != null}" style="margin-top: 20px;">
+    Ответ от сервиса:<br/>
+    <span th:text="${response}"></span>
+  </div>
+</div>
+</body>
+</html>
