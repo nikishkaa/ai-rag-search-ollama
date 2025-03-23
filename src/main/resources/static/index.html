@@ -8,7 +8,7 @@
 <div style="width: 500px; margin: auto; text-align: center; padding-top: 50px;">
   <h1>Интерфейс взаимодействия с REST-сервисом</h1>
 
-  <form action="#" th:action="@{/send}" method="post">
+  <form action="/api/chat" th:action="@{/send}" method="post">
     <label for="message">Введите сообщение:</label><br/>
     <input type="text" id="message" name="message"/><br/><br/>
     <button type="submit">Отправить</button>

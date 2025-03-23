@@ -4,6 +4,7 @@ import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.QuestionAnswerAdvisor;
 import org.springframework.ai.ollama.OllamaChatModel;
 import org.springframework.ai.vectorstore.VectorStore;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +23,7 @@ public class ChatController {
         this.vectorStore = vectorStore;
     }
 
-    @PostMapping
+    @PostMapping(consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String chat(@RequestBody String message) {
         return ChatClient.builder(ollamaChatModel)
                 .build()
