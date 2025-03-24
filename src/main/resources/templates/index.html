@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8"/>
     <title>AI Search</title>
-      <link rel="icon" href="../img/icon.png" type="image/x-icon">
+<!--      <link rel="icon" href="../img/icon.png" type="image/x-icon">-->
 
 </head>
 <body>
-<div class="main-view">
     <h1>Интерфейс взаимодействия с REST-сервисом</h1>
 
     <form action="/api/chat" th:action="@{/send}" method="post">
@@ -20,6 +19,5 @@
         Ответ от сервиса:<br/>
         <span th:text="${response}"></span>
     </div>
-</div>
 </body>
 </html>
